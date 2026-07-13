@@ -153,5 +153,57 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "Tajawal", "Cairo", system-ui, -apple-system, sans-serif;
   }
+  html { direction: rtl; }
+}
+
+@utility text-gold {
+  color: var(--gold);
+}
+@utility bg-gold {
+  background-color: var(--gold);
+}
+@utility gold-glow {
+  box-shadow: 0 0 40px -8px color-mix(in oklab, var(--gold) 55%, transparent);
+}
+@utility gold-text-glow {
+  text-shadow: 0 0 18px color-mix(in oklab, var(--gold) 60%, transparent);
+}
+@utility btn-gold {
+  background-image: linear-gradient(180deg, var(--gold-light), var(--gold-dark));
+  color: var(--primary-foreground);
+  font-weight: 700;
+  box-shadow: 0 8px 24px -10px color-mix(in oklab, var(--gold) 70%, transparent);
+}
+
+@keyframes sg-spin-slow { to { transform: rotate(360deg); } }
+@keyframes sg-pulse-ring {
+  0% { transform: translate(-50%,-50%) scale(0.3); opacity: 0.9; }
+  100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
+}
+@keyframes sg-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes sg-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+@keyframes sg-float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes sg-scan {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+@keyframes sg-shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+@keyframes sg-expand {
+  from { transform: scale(0); opacity: 1; }
+  to { transform: scale(1); opacity: 0; }
 }
