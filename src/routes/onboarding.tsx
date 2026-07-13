@@ -20,7 +20,7 @@ function Onboarding() {
   const next = () => (isLast ? navigate({ to: "/register" }) : setI((v) => v + 1));
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-x-hidden">
       {/* Header */}
       <header className="flex items-center justify-between px-5 pt-5">
         <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ function Onboarding() {
 
       {/* Illustration */}
       <div className="flex-1 flex items-center justify-center px-6 pt-4">
-        <div key={i} className="w-full max-w-sm" style={{ animation: "sg-rise 0.5s ease-out" }}>
+        <div key={i} className="w-full max-w-[300px] relative" style={{ animation: "sg-rise 0.5s ease-out" }}>
           {i === 0 && <SlidePhone />}
           {i === 1 && <SlideHeatmap />}
           {i === 2 && <SlideMap />}
