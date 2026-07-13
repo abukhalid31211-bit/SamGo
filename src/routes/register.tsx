@@ -220,7 +220,7 @@ function Register() {
 
               <div className="mt-6 flex gap-3">
                 <button onClick={() => go(2)} className="rounded-2xl px-5 py-3.5 text-sm border border-border">السابق</button>
-                <GoldButton disabled={!canSubmit} onClick={() => navigate({ to: "/login" })}>
+                <GoldButton disabled={!canSubmit} onClick={() => navigate({ to: "/home" })}>
                   إنشاء الحساب 🎉
                 </GoldButton>
               </div>

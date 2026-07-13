@@ -27,7 +27,7 @@ function Login() {
 
       <form
         className="mt-8 space-y-4"
-        onSubmit={(e) => { e.preventDefault(); navigate({ to: "/" }); }}
+        onSubmit={(e) => { e.preventDefault(); navigate({ to: "/home" }); }}
       >
         <FloatInput
           label="البريد الإلكتروني"
