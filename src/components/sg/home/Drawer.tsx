@@ -3,6 +3,7 @@ type Props = {
   onClose: () => void;
   user: { name: string; email: string; plan: string };
   onUpgrade: () => void;
+  onNavigate?: (id: string) => void;
 };
 
 const menuItems = [
@@ -13,7 +14,7 @@ const menuItems = [
   { id: "about", label: "حول التطبيق", icon: "ℹ️" },
 ];
 
-export function Drawer({ open, onClose, user, onUpgrade }: Props) {
+export function Drawer({ open, onClose, user, onUpgrade, onNavigate }: Props) {
   return (
     <>
       <div
@@ -76,6 +77,7 @@ export function Drawer({ open, onClose, user, onUpgrade }: Props) {
           {menuItems.map((item) => (
             <button
               key={item.id}
+              onClick={() => onNavigate?.(item.id)}
               className="w-full flex items-center gap-3 rounded-xl px-3 py-3 text-sm hover:bg-bg-2 transition-colors active:scale-95"
             >
               <span className="text-lg">{item.icon}</span>

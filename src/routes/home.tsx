@@ -61,6 +61,10 @@ function HomeScreen() {
   }, []);
 
   const handleTabChange = (tab: string) => {
+    if (tab === "projects") {
+      navigate({ to: "/projects" });
+      return;
+    }
     setActiveTab(tab);
     if (tab === "home") return;
     if (tab === "settings") {
@@ -107,8 +111,8 @@ function HomeScreen() {
           <ProjectsSection
             projects={data.projects}
             onProjectLongPress={(id) => setProjectSheet(id)}
-            onCreateProject={() => navigate({ to: "/home" })}
-            onViewAll={() => navigate({ to: "/home" })}
+            onCreateProject={() => navigate({ to: "/projects/new" })}
+            onViewAll={() => navigate({ to: "/projects" })}
           />
 
           <StatsSection stats={data.stats} />
@@ -130,6 +134,10 @@ function HomeScreen() {
           setDrawerOpen(false);
           setUpgradeOpen(true);
         }}
+        onNavigate={(id) => {
+          setDrawerOpen(false);
+          if (id === "projects") navigate({ to: "/projects" });
+        }}
       />
 
       <NotificationsPanel
@@ -144,7 +152,7 @@ function HomeScreen() {
         open={welcomeOpen}
         onClose={() => setWelcomeOpen(false)}
         user={data.user}
-        onStartProject={() => navigate({ to: "/home" })}
+        onStartProject={() => navigate({ to: "/projects/new" })}
       />
 
       <UpgradeModal open={upgradeOpen} onClose={() => setUpgradeOpen(false)} />
@@ -153,7 +161,7 @@ function HomeScreen() {
         projectId={projectSheet}
         projects={data.projects}
         onClose={() => setProjectSheet(null)}
-        onOpen={() => navigate({ to: "/home" })}
+        onOpen={(id) => navigate({ to: "/projects/$projectId", params: { projectId: id } })}
         onTogglePin={toggleProjectPin}
         onDelete={deleteProject}
       />
