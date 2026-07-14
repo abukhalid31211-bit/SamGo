@@ -50,7 +50,6 @@ function TopoMapScreen() {
   const [points, setPoints] = useState<TopoPoint[]>(MOCK_POINTS);
   const [colorPickerFor, setColorPickerFor] = useState<string | null>(null);
   const [panelExpanded, setPanelExpanded] = useState(false);
-  const panelDragY = useRef(0);
 
   const showPoints = layers.find((l) => l.id === "points")?.visible;
   const showContour = layers.find((l) => l.id === "contour")?.visible;
@@ -138,7 +137,7 @@ function TopoMapScreen() {
                     fill="none" stroke={colors[i]} strokeWidth={w} strokeOpacity="0.7"
                   />
                   {i % 2 === 0 && (
-                    <text x="97%" y={level - 1} fill={colors[i]} fontSize="6" textAnchor="end" opacity="0.9">
+                    <text x="97%" y={level - 1} fill={colors[i]} fontSize="6" textAnchor="end" opacity="0.9" pointerEvents="none">
                       {110 + i * 10}م
                     </text>
                   )}
@@ -158,7 +157,8 @@ function TopoMapScreen() {
               const py = ((e.clientY - rect.top) / rect.height) * 100;
               const hit = points.find((p) => Math.abs(p.x - px) < 4 && Math.abs(p.y - py) < 4);
               if (hit) setSelectedPoint(hit);
-              else if (!addPointOpen && !selectedPoint) setAddPointOpen(true);
+              else if (selectedPoint) setSelectedPoint(null);
+              else if (!addPointOpen) setAddPointOpen(true);
             }}
             style={{ opacity: (layers.find((l) => l.id === "points")?.opacity ?? 100) / 100 }}
           >
@@ -171,7 +171,7 @@ function TopoMapScreen() {
                   strokeWidth="1.5"
                   style={{ filter: "drop-shadow(0 0 6px var(--gold))" }}
                 />
-                <text x={`${p.x}%`} y={`${p.y - 3}%`} textAnchor="middle" fill="white" fontSize="7" dy="-4">
+                <text x={`${p.x}%`} y={`${p.y - 3}%`} textAnchor="middle" fill="white" fontSize="7" dy="-4" pointerEvents="none">
                   {p.name}
                 </text>
               </g>

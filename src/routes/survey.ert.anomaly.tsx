@@ -118,7 +118,8 @@ function ERTAnomalyScreen() {
                 key={a.id}
                 className="rounded-2xl border bg-card p-4"
                 style={{
-                  borderColor: `${a.color.replace(")", " / 0.4)")}`,
+                  borderColor: a.color,
+                  background: `color-mix(in oklab, ${a.color} 8%, transparent)`,
                   animation: `sg-rise 0.3s ease-out ${i * 0.06}s both`,
                 }}
               >

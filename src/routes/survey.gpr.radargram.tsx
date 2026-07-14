@@ -150,7 +150,7 @@ function GPRRadargramScreen() {
 
               {/* Ground surface line */}
               <line x1="0" y1="8%" x2="100%" y2="8%" stroke="oklch(0.75 0.15 85)" strokeWidth="1.5" strokeOpacity="0.7" strokeDasharray="4 2" />
-              <text x="1%" y="7%" fill="oklch(0.75 0.15 85)" fontSize="6" opacity="0.8">سطح الأرض</text>
+              <text x="1%" y="7%" fill="oklch(0.75 0.15 85)" fontSize="6" opacity="0.8" pointerEvents="none">سطح الأرض</text>
 
               {/* Hyperbola arcs */}
               {MOCK_HYPERBOLAS.map((h) => (
@@ -165,7 +165,7 @@ function GPRRadargramScreen() {
                       filter: selectedHyperbola?.id === h.id ? "drop-shadow(0 0 6px yellow)" : "none",
                     }}
                   />
-                  <text x={`${h.x + 16}%`} y={`${h.y - 10}%`} fill="oklch(0.65 0.24 25)" fontSize="7" fontWeight="bold">
+                  <text x={`${h.x + 16}%`} y={`${h.y - 10}%`} fill="oklch(0.65 0.24 25)" fontSize="7" fontWeight="bold" pointerEvents="none">
                     {h.label}
                   </text>
                 </g>

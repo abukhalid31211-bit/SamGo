@@ -49,7 +49,7 @@ function ERTHeatmapScreen() {
   const MAX_V = Math.max(...measurements.map((m) => m.value));
 
   const addPoint = () => {
-    if (!addX || !addY || !addVal) return;
+    if (addX === "" || addY === "" || addVal === "") return;
     setMeasurements((ms) => [
       ...ms,
       { x: parseFloat(addX), y: parseFloat(addY), value: parseFloat(addVal), lat: 24.688 + Math.random() * 0.01, lng: 46.722 + Math.random() * 0.01 },
