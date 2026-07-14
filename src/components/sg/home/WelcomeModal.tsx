@@ -2,9 +2,10 @@ type Props = {
   open: boolean;
   onClose: () => void;
   user: { name: string };
+  onStartProject?: () => void;
 };
 
-export function WelcomeModal({ open, onClose, user }: Props) {
+export function WelcomeModal({ open, onClose, user, onStartProject }: Props) {
   if (!open) return null;
 
   return (
@@ -49,12 +50,20 @@ export function WelcomeModal({ open, onClose, user }: Props) {
             ))}
           </div>
 
-          <button
-            onClick={onClose}
-            className="btn-gold mt-6 w-full rounded-2xl py-3.5 text-sm font-bold transition-all active:scale-95"
-          >
-            ابدأ الآن
-          </button>
+          <div className="mt-6 w-full flex gap-3">
+            <button
+              onClick={onClose}
+              className="flex-1 rounded-2xl border border-border py-3.5 text-sm font-bold text-muted-foreground transition-all active:scale-95"
+            >
+              تصفح أولاً
+            </button>
+            <button
+              onClick={() => { onStartProject?.(); onClose(); }}
+              className="btn-gold flex-1 rounded-2xl py-3.5 text-sm font-bold transition-all active:scale-95"
+            >
+              ابدأ مشروعاً
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -12,11 +12,12 @@ type Props = {
   projectId: string | null;
   projects: Project[];
   onClose: () => void;
+  onOpen?: (id: string) => void;
   onTogglePin: (id: string) => void;
   onDelete: (id: string) => void;
 };
 
-export function ProjectOptionsSheet({ projectId, projects, onClose, onTogglePin, onDelete }: Props) {
+export function ProjectOptionsSheet({ projectId, projects, onClose, onOpen, onTogglePin, onDelete }: Props) {
   if (!projectId) return null;
   const project = projects.find((p) => p.id === projectId);
   if (!project) return null;
@@ -35,6 +36,17 @@ export function ProjectOptionsSheet({ projectId, projects, onClose, onTogglePin,
         <p className="text-xs text-muted-foreground mb-4">{project.type}</p>
 
         <div className="space-y-2">
+          <button
+            onClick={() => {
+              onOpen?.(project.id);
+              onClose();
+            }}
+            className="w-full flex items-center gap-3 rounded-2xl border border-border bg-bg-2/60 p-3.5 text-sm hover:bg-bg-2 transition-colors active:scale-95"
+          >
+            <span className="text-lg">📂</span>
+            <span>فتح المشروع</span>
+          </button>
+
           <button
             onClick={() => {
               onTogglePin(project.id);

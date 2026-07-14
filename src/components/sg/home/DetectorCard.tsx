@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export function DetectorCard() {
+type Props = {
+  plan?: "free" | "pro";
+};
+
+export function DetectorCard({ plan = "free" }: Props) {
   const [scanning, setScanning] = useState(false);
 
   return (
@@ -18,13 +22,27 @@ export function DetectorCard() {
 
       <div className="relative p-5">
         <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="text-base font-bold">الكاشف الذكي</h3>
-            <p className="text-xs text-muted-foreground mt-0.5">جاهز للمسح الميداني</p>
-          </div>
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${scanning ? "bg-success" : "bg-muted-foreground"}`} />
-            <span className="text-[11px] text-muted-foreground">{scanning ? "يعمل" : "خامل"}</span>
+            <span className="text-gold">📡</span>
+            <div>
+              <h3 className="text-base font-bold">الكاشف الذكي</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">جاهز للمسح الميداني</p>
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-1.5">
+            <span
+              className={`text-[10px] font-bold rounded-full px-2 py-0.5 ${
+                plan === "pro"
+                  ? "bg-[oklch(0.62_0.22_300/0.2)] text-[oklch(0.78_0.16_300)]"
+                  : "bg-bg-2 text-muted-foreground"
+              }`}
+            >
+              {plan === "pro" ? "PRO" : "مجاني"}
+            </span>
+            <div className="flex items-center gap-2">
+              <span className={`w-2 h-2 rounded-full ${scanning ? "bg-success" : "bg-muted-foreground"}`} />
+              <span className="text-[11px] text-muted-foreground">{scanning ? "يعمل" : "خامل"}</span>
+            </div>
           </div>
         </div>
 

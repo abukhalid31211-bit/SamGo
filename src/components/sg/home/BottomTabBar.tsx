@@ -21,20 +21,42 @@ export function BottomTabBar({ active, onChange }: Props) {
   return (
     <nav className="fixed bottom-0 inset-x-0 z-20 h-16 border-t border-border bg-card/80 backdrop-blur-xl">
       <div className="flex items-center justify-around h-full max-w-2xl mx-auto px-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => onChange(tab.id)}
-            className={`flex flex-col items-center gap-1 px-2 py-1 rounded-lg transition-all active:scale-90 ${
-              active === tab.id ? "text-gold" : "text-muted-foreground"
-            }`}
-          >
-            <span className={`text-xl transition-transform ${active === tab.id ? "scale-110" : ""}`}>
-              {tab.icon}
-            </span>
-            <span className="text-[10px] font-medium">{tab.label}</span>
-          </button>
-        ))}
+        {tabs.map((tab) => {
+          if (tab.id === "detector") {
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onChange(tab.id)}
+                aria-label={tab.label}
+                className="relative flex flex-col items-center active:scale-90 transition-transform"
+              >
+                <span
+                  className="w-[60px] h-[60px] rounded-full grid place-items-center text-2xl -translate-y-[10px] btn-gold gold-glow"
+                  style={{ boxShadow: "0 10px 24px -8px var(--gold)" }}
+                >
+                  {tab.icon}
+                </span>
+                <span className={`text-[10px] font-medium -mt-2 ${active === tab.id ? "text-gold" : "text-muted-foreground"}`}>
+                  {tab.label}
+                </span>
+              </button>
+            );
+          }
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onChange(tab.id)}
+              className={`flex flex-col items-center gap-1 px-2 py-1 rounded-lg transition-all active:scale-90 ${
+                active === tab.id ? "text-gold" : "text-muted-foreground"
+              }`}
+            >
+              <span className={`text-xl transition-transform ${active === tab.id ? "scale-110" : ""}`}>
+                {tab.icon}
+              </span>
+              <span className="text-[10px] font-medium">{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
     </nav>
   );

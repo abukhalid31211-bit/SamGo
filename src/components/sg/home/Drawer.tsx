@@ -27,6 +27,24 @@ export function Drawer({ open, onClose, user, onUpgrade }: Props) {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
+        <div className="p-5 pb-4" style={{ backgroundImage: "linear-gradient(180deg, color-mix(in oklab, var(--gold) 10%, transparent), transparent)" }}>
+          <div className="flex items-center gap-2 mb-3">
+            <div
+              className="w-10 h-10 rounded-2xl grid place-items-center text-sm font-black gold-glow"
+              style={{
+                backgroundImage: "linear-gradient(180deg, oklch(0.9 0.12 90), oklch(0.6 0.14 70))",
+                color: "#fbf7ec",
+              }}
+            >
+              SG
+            </div>
+            <div>
+              <p className="text-sm font-black text-gold tracking-widest">SAMGOLD</p>
+              <p className="text-[10px] text-muted-foreground">المسح الشامل والكشف الذكي</p>
+            </div>
+          </div>
+        </div>
+
         <div className="p-5 border-b border-border">
           <div className="flex items-center gap-3">
             <div
@@ -66,11 +84,12 @@ export function Drawer({ open, onClose, user, onUpgrade }: Props) {
           ))}
         </div>
 
-        <div className="absolute bottom-5 inset-x-5">
+        <div className="absolute bottom-0 inset-x-0 pb-5 px-5">
           <button className="w-full flex items-center justify-center gap-2 rounded-xl border border-border px-3 py-3 text-sm text-destructive hover:bg-destructive/10 transition-colors active:scale-95">
             <span>🚪</span>
             <span>تسجيل الخروج</span>
           </button>
+          <p className="mt-3 text-center text-[10px] text-muted-foreground/60">الإصدار 1.0.0</p>
         </div>
       </aside>
     </>

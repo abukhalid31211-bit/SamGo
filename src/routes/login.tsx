@@ -13,10 +13,36 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
+  const [remember, setRemember] = useState(false);
+  const [error, setError] = useState("");
+  const [shake, setShake] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!/\S+@\S+/.test(email) || password.length < 6) {
+      setError("تحقق من البريد الإلكتروني وكلمة المرور.");
+      setShake(true);
+      setTimeout(() => setShake(false), 400);
+      return;
+    }
+    setError("");
+    setLoading(true);
+    setTimeout(() => navigate({ to: "/home" }), 500);
+  };
 
   return (
-    <div className="min-h-screen bg-background text-foreground px-6 py-10 flex flex-col">
-      <div className="flex flex-col items-center pt-8">
+    <div className="relative min-h-screen bg-background text-foreground px-6 py-10 flex flex-col overflow-hidden">
+      <div
+        className="pointer-events-none absolute -top-16 -right-16 w-64 h-64 rounded-full blur-3xl opacity-25"
+        style={{ background: "var(--gold)" }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-20 -left-20 w-64 h-64 rounded-full blur-3xl opacity-15"
+        style={{ background: "oklch(0.72 0.15 230)" }}
+      />
+
+      <div className="relative flex flex-col items-center pt-8">
         <div className="w-16 h-16 rounded-full flex items-center justify-center text-lg font-black gold-glow"
              style={{ backgroundImage: "linear-gradient(180deg, oklch(0.9 0.12 90), oklch(0.6 0.14 70))", color: "#fbf7ec" }}>
           SG
@@ -26,8 +52,9 @@ function Login() {
       </div>
 
       <form
-        className="mt-8 space-y-4"
-        onSubmit={(e) => { e.preventDefault(); navigate({ to: "/home" }); }}
+        className="relative mt-8 space-y-4"
+        style={shake ? { animation: "sg-shake 0.4s ease" } : undefined}
+        onSubmit={submit}
       >
         <FloatInput
           label="البريد الإلكتروني"
@@ -35,6 +62,7 @@ function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           icon={<span>✉︎</span>}
+          error={error || undefined}
         />
         <div className="relative">
           <FloatInput
@@ -52,10 +80,42 @@ function Login() {
             {show ? "إخفاء" : "إظهار"}
           </button>
         </div>
-        <div className="flex justify-end">
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <span
+              onClick={() => setRemember((r) => !r)}
+              className={`w-4 h-4 rounded grid place-items-center border transition-colors ${
+                remember ? "bg-gold border-transparent" : "border-border bg-card"
+              }`}
+            >
+              {remember && <span className="text-[9px] text-primary-foreground font-black">✓</span>}
+            </span>
+            <span className="text-xs text-muted-foreground">تذكّرني</span>
+          </label>
           <Link to="/forgot-password" className="text-xs text-gold">نسيت كلمة المرور؟</Link>
         </div>
-        <GoldButton type="submit">تسجيل الدخول</GoldButton>
+        <GoldButton type="submit" disabled={loading}>
+          {loading ? (
+            <span className="inline-block w-4 h-4 rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground animate-spin" />
+          ) : (
+            "تسجيل الدخول"
+          )}
+        </GoldButton>
+
+        <div className="flex items-center gap-3 py-1">
+          <span className="flex-1 h-px bg-border" />
+          <span className="text-xs text-muted-foreground">أو</span>
+          <span className="flex-1 h-px bg-border" />
+        </div>
+
+        <button
+          type="button"
+          onClick={() => navigate({ to: "/home" })}
+          className="w-full rounded-2xl border border-border py-3.5 text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+        >
+          <span className="w-5 h-5 rounded-full bg-gold/15 grid place-items-center text-gold text-[11px] font-black">G</span>
+          <span>الدخول بحساب Google</span>
+        </button>
       </form>
 
       <p className="mt-auto text-center text-xs text-muted-foreground pt-6">

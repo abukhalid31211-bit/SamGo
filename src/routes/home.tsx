@@ -89,6 +89,7 @@ function HomeScreen() {
         user={data.user}
         onMenu={() => setDrawerOpen(true)}
         onNotifications={() => setNotifOpen(true)}
+        onProfile={() => setDrawerOpen(true)}
         unreadCount={unreadCount}
       />
 
@@ -99,13 +100,15 @@ function HomeScreen() {
         <div className="mx-auto max-w-2xl px-4 space-y-6 pt-4">
           <QuickAccess onUpgrade={() => setUpgradeOpen(true)} />
 
-          <DetectorCard />
+          <DetectorCard plan={data.user.plan} />
 
-          <AIInsightsCard insights={data.aiInsights} />
+          <AIInsightsCard insights={data.aiInsights} onDetails={() => navigate({ to: "/home" })} />
 
           <ProjectsSection
             projects={data.projects}
             onProjectLongPress={(id) => setProjectSheet(id)}
+            onCreateProject={() => navigate({ to: "/home" })}
+            onViewAll={() => navigate({ to: "/home" })}
           />
 
           <StatsSection stats={data.stats} />
@@ -137,7 +140,12 @@ function HomeScreen() {
         onMarkAllRead={markAllNotifsRead}
       />
 
-      <WelcomeModal open={welcomeOpen} onClose={() => setWelcomeOpen(false)} user={data.user} />
+      <WelcomeModal
+        open={welcomeOpen}
+        onClose={() => setWelcomeOpen(false)}
+        user={data.user}
+        onStartProject={() => navigate({ to: "/home" })}
+      />
 
       <UpgradeModal open={upgradeOpen} onClose={() => setUpgradeOpen(false)} />
 
@@ -145,6 +153,7 @@ function HomeScreen() {
         projectId={projectSheet}
         projects={data.projects}
         onClose={() => setProjectSheet(null)}
+        onOpen={() => navigate({ to: "/home" })}
         onTogglePin={toggleProjectPin}
         onDelete={deleteProject}
       />
