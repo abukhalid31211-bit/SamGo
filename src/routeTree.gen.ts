@@ -10,19 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as SurveyRouteImport } from './routes/survey'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SurveyTopoRouteImport } from './routes/survey.topo'
+import { Route as SurveyGprRouteImport } from './routes/survey.gpr'
+import { Route as SurveyErtRouteImport } from './routes/survey.ert'
 import { Route as ProjectsNewRouteImport } from './routes/projects.new'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
+import { Route as SurveyTopoImportRouteImport } from './routes/survey.topo.import'
+import { Route as SurveyTopoContourRouteImport } from './routes/survey.topo.contour'
+import { Route as SurveyTopoExportRouteImport } from './routes/survey.topo.export'
+import { Route as SurveyGprRadargramRouteImport } from './routes/survey.gpr.radargram'
+import { Route as SurveyErtHeatmapRouteImport } from './routes/survey.ert.heatmap'
+import { Route as SurveyErtAnomalyRouteImport } from './routes/survey.ert.anomaly'
 import { Route as ProjectsProjectIdFilesFileIdRouteImport } from './routes/projects.$projectId.files.$fileId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SurveyRoute = SurveyRouteImport.update({
+  id: '/survey',
+  path: '/survey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -55,6 +70,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SurveyTopoRoute = SurveyTopoRouteImport.update({
+  id: '/topo',
+  path: '/topo',
+  getParentRoute: () => SurveyRoute,
+} as any)
+const SurveyGprRoute = SurveyGprRouteImport.update({
+  id: '/gpr',
+  path: '/gpr',
+  getParentRoute: () => SurveyRoute,
+} as any)
+const SurveyErtRoute = SurveyErtRouteImport.update({
+  id: '/ert',
+  path: '/ert',
+  getParentRoute: () => SurveyRoute,
+} as any)
 const ProjectsNewRoute = ProjectsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -64,6 +94,36 @@ const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/$projectId',
   path: '/$projectId',
   getParentRoute: () => ProjectsRoute,
+} as any)
+const SurveyTopoImportRoute = SurveyTopoImportRouteImport.update({
+  id: '/import',
+  path: '/import',
+  getParentRoute: () => SurveyTopoRoute,
+} as any)
+const SurveyTopoContourRoute = SurveyTopoContourRouteImport.update({
+  id: '/contour',
+  path: '/contour',
+  getParentRoute: () => SurveyTopoRoute,
+} as any)
+const SurveyTopoExportRoute = SurveyTopoExportRouteImport.update({
+  id: '/export',
+  path: '/export',
+  getParentRoute: () => SurveyTopoRoute,
+} as any)
+const SurveyGprRadargramRoute = SurveyGprRadargramRouteImport.update({
+  id: '/radargram',
+  path: '/radargram',
+  getParentRoute: () => SurveyGprRoute,
+} as any)
+const SurveyErtHeatmapRoute = SurveyErtHeatmapRouteImport.update({
+  id: '/heatmap',
+  path: '/heatmap',
+  getParentRoute: () => SurveyErtRoute,
+} as any)
+const SurveyErtAnomalyRoute = SurveyErtAnomalyRouteImport.update({
+  id: '/anomaly',
+  path: '/anomaly',
+  getParentRoute: () => SurveyErtRoute,
 } as any)
 const ProjectsProjectIdFilesFileIdRoute =
   ProjectsProjectIdFilesFileIdRouteImport.update({
@@ -80,9 +140,19 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/register': typeof RegisterRoute
+  '/survey': typeof SurveyRouteWithChildren
   '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
   '/projects/new': typeof ProjectsNewRoute
+  '/survey/topo': typeof SurveyTopoRouteWithChildren
+  '/survey/gpr': typeof SurveyGprRouteWithChildren
+  '/survey/ert': typeof SurveyErtRouteWithChildren
   '/projects/$projectId/files/$fileId': typeof ProjectsProjectIdFilesFileIdRoute
+  '/survey/topo/import': typeof SurveyTopoImportRoute
+  '/survey/topo/contour': typeof SurveyTopoContourRoute
+  '/survey/topo/export': typeof SurveyTopoExportRoute
+  '/survey/gpr/radargram': typeof SurveyGprRadargramRoute
+  '/survey/ert/heatmap': typeof SurveyErtHeatmapRoute
+  '/survey/ert/anomaly': typeof SurveyErtAnomalyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -92,9 +162,19 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/register': typeof RegisterRoute
+  '/survey': typeof SurveyRouteWithChildren
   '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
   '/projects/new': typeof ProjectsNewRoute
+  '/survey/topo': typeof SurveyTopoRouteWithChildren
+  '/survey/gpr': typeof SurveyGprRouteWithChildren
+  '/survey/ert': typeof SurveyErtRouteWithChildren
   '/projects/$projectId/files/$fileId': typeof ProjectsProjectIdFilesFileIdRoute
+  '/survey/topo/import': typeof SurveyTopoImportRoute
+  '/survey/topo/contour': typeof SurveyTopoContourRoute
+  '/survey/topo/export': typeof SurveyTopoExportRoute
+  '/survey/gpr/radargram': typeof SurveyGprRadargramRoute
+  '/survey/ert/heatmap': typeof SurveyErtHeatmapRoute
+  '/survey/ert/anomaly': typeof SurveyErtAnomalyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -105,10 +185,21 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/register': typeof RegisterRoute
+  '/survey': typeof SurveyRouteWithChildren
   '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
   '/projects/new': typeof ProjectsNewRoute
+  '/survey/topo': typeof SurveyTopoRouteWithChildren
+  '/survey/gpr': typeof SurveyGprRouteWithChildren
+  '/survey/ert': typeof SurveyErtRouteWithChildren
   '/projects/$projectId/files/$fileId': typeof ProjectsProjectIdFilesFileIdRoute
+  '/survey/topo/import': typeof SurveyTopoImportRoute
+  '/survey/topo/contour': typeof SurveyTopoContourRoute
+  '/survey/topo/export': typeof SurveyTopoExportRoute
+  '/survey/gpr/radargram': typeof SurveyGprRadargramRoute
+  '/survey/ert/heatmap': typeof SurveyErtHeatmapRoute
+  '/survey/ert/anomaly': typeof SurveyErtAnomalyRoute
 }
+
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -119,9 +210,19 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/projects'
     | '/register'
+    | '/survey'
     | '/projects/$projectId'
     | '/projects/new'
+    | '/survey/topo'
+    | '/survey/gpr'
+    | '/survey/ert'
     | '/projects/$projectId/files/$fileId'
+    | '/survey/topo/import'
+    | '/survey/topo/contour'
+    | '/survey/topo/export'
+    | '/survey/gpr/radargram'
+    | '/survey/ert/heatmap'
+    | '/survey/ert/anomaly'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -131,9 +232,19 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/projects'
     | '/register'
+    | '/survey'
     | '/projects/$projectId'
     | '/projects/new'
+    | '/survey/topo'
+    | '/survey/gpr'
+    | '/survey/ert'
     | '/projects/$projectId/files/$fileId'
+    | '/survey/topo/import'
+    | '/survey/topo/contour'
+    | '/survey/topo/export'
+    | '/survey/gpr/radargram'
+    | '/survey/ert/heatmap'
+    | '/survey/ert/anomaly'
   id:
     | '__root__'
     | '/'
@@ -143,11 +254,22 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/projects'
     | '/register'
+    | '/survey'
     | '/projects/$projectId'
     | '/projects/new'
+    | '/survey/topo'
+    | '/survey/gpr'
+    | '/survey/ert'
     | '/projects/$projectId/files/$fileId'
+    | '/survey/topo/import'
+    | '/survey/topo/contour'
+    | '/survey/topo/export'
+    | '/survey/gpr/radargram'
+    | '/survey/ert/heatmap'
+    | '/survey/ert/anomaly'
   fileRoutesById: FileRoutesById
 }
+
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
@@ -156,81 +278,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
   RegisterRoute: typeof RegisterRoute
-}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects': {
-      id: '/projects'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/new': {
-      id: '/projects/new'
-      path: '/new'
-      fullPath: '/projects/new'
-      preLoaderRoute: typeof ProjectsNewRouteImport
-      parentRoute: typeof ProjectsRoute
-    }
-    '/projects/$projectId': {
-      id: '/projects/$projectId'
-      path: '/$projectId'
-      fullPath: '/projects/$projectId'
-      preLoaderRoute: typeof ProjectsProjectIdRouteImport
-      parentRoute: typeof ProjectsRoute
-    }
-    '/projects/$projectId/files/$fileId': {
-      id: '/projects/$projectId/files/$fileId'
-      path: '/files/$fileId'
-      fullPath: '/projects/$projectId/files/$fileId'
-      preLoaderRoute: typeof ProjectsProjectIdFilesFileIdRouteImport
-      parentRoute: typeof ProjectsProjectIdRoute
-    }
-  }
+  SurveyRoute: typeof SurveyRouteWithChildren
 }
 
 interface ProjectsProjectIdRouteChildren {
@@ -258,6 +306,64 @@ const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
   ProjectsRouteChildren,
 )
 
+interface SurveyTopoRouteChildren {
+  SurveyTopoImportRoute: typeof SurveyTopoImportRoute
+  SurveyTopoContourRoute: typeof SurveyTopoContourRoute
+  SurveyTopoExportRoute: typeof SurveyTopoExportRoute
+}
+
+const SurveyTopoRouteChildren: SurveyTopoRouteChildren = {
+  SurveyTopoImportRoute: SurveyTopoImportRoute,
+  SurveyTopoContourRoute: SurveyTopoContourRoute,
+  SurveyTopoExportRoute: SurveyTopoExportRoute,
+}
+
+const SurveyTopoRouteWithChildren = SurveyTopoRoute._addFileChildren(
+  SurveyTopoRouteChildren,
+)
+
+interface SurveyGprRouteChildren {
+  SurveyGprRadargramRoute: typeof SurveyGprRadargramRoute
+}
+
+const SurveyGprRouteChildren: SurveyGprRouteChildren = {
+  SurveyGprRadargramRoute: SurveyGprRadargramRoute,
+}
+
+const SurveyGprRouteWithChildren = SurveyGprRoute._addFileChildren(
+  SurveyGprRouteChildren,
+)
+
+interface SurveyErtRouteChildren {
+  SurveyErtHeatmapRoute: typeof SurveyErtHeatmapRoute
+  SurveyErtAnomalyRoute: typeof SurveyErtAnomalyRoute
+}
+
+const SurveyErtRouteChildren: SurveyErtRouteChildren = {
+  SurveyErtHeatmapRoute: SurveyErtHeatmapRoute,
+  SurveyErtAnomalyRoute: SurveyErtAnomalyRoute,
+}
+
+const SurveyErtRouteWithChildren = SurveyErtRoute._addFileChildren(
+  SurveyErtRouteChildren,
+)
+
+interface SurveyRouteChildren {
+  SurveyTopoRoute: typeof SurveyTopoRouteWithChildren
+  SurveyGprRoute: typeof SurveyGprRouteWithChildren
+  SurveyErtRoute: typeof SurveyErtRouteWithChildren
+}
+
+const SurveyRouteChildren: SurveyRouteChildren = {
+  SurveyTopoRoute: SurveyTopoRouteWithChildren,
+  SurveyGprRoute: SurveyGprRouteWithChildren,
+  SurveyErtRoute: SurveyErtRouteWithChildren,
+}
+
+const SurveyRouteWithChildren = SurveyRoute._addFileChildren(
+  SurveyRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
@@ -266,6 +372,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   ProjectsRoute: ProjectsRouteWithChildren,
   RegisterRoute: RegisterRoute,
+  SurveyRoute: SurveyRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

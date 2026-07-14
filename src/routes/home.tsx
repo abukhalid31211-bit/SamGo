@@ -73,6 +73,10 @@ function HomeScreen() {
       navigate({ to: "/projects" });
       return;
     }
+    if (tab === "detector") {
+      navigate({ to: "/survey" });
+      return;
+    }
     setActiveTab(tab);
     if (tab === "home") return;
     if (tab === "settings") {
