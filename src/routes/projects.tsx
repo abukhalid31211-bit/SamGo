@@ -317,7 +317,7 @@ function ProjectsListScreen() {
         onChange={(tab) => {
           if (tab === "home") navigate({ to: "/home" });
           else if (tab === "projects") navigate({ to: "/projects" });
-          else if (tab === "detector") navigate({ to: "/survey" });
+          else if (tab === "detector") navigate({ to: "/detector" });
         }}
       />
     </div>

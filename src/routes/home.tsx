@@ -74,7 +74,7 @@ function HomeScreen() {
       return;
     }
     if (tab === "detector") {
-      navigate({ to: "/survey" });
+      navigate({ to: "/detector" });
       return;
     }
     setActiveTab(tab);
@@ -117,7 +117,8 @@ function HomeScreen() {
           <QuickAccess
             onUpgrade={() => setUpgradeOpen(true)}
             onAction={(id) => {
-              if (id === "scan" || id === "detect") navigate({ to: "/projects/new" });
+              if (id === "scan") navigate({ to: "/projects/new" });
+    if (id === "detect") navigate({ to: "/detector" });
               else if (id === "3d" || id === "report") navigate({ to: "/projects" });
             }}
           />
