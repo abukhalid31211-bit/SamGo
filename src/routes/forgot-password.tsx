@@ -55,7 +55,7 @@ function ForgotPassword() {
       <header className="sticky top-0 bg-background/90 backdrop-blur border-b border-border">
         <div className="flex items-center px-4 h-14">
           <Link to="/login" className="w-9 h-9 rounded-full grid place-items-center border border-border">
-            <span className="text-lg">›</span>
+            <span className="text-lg">←</span>
           </Link>
           <h1 className="flex-1 text-center text-sm font-bold">استعادة كلمة المرور</h1>
           <div className="w-9" />

@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Outlet, useChildMatches } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 
 import { BottomTabBar } from "@/components/sg/home/BottomTabBar";
@@ -6,7 +6,7 @@ import { ProjectOptionsSheet } from "@/components/sg/home/ProjectOptionsSheet";
 import { useLocalData, type Project } from "@/components/sg/home/useLocalData";
 
 export const Route = createFileRoute("/projects")({
-  component: ProjectsListScreen,
+  component: ProjectsLayout,
   head: () => ({ meta: [{ title: "مشاريعي — SAMGOLD" }] }),
 });
 
@@ -49,6 +49,12 @@ function matchesFilter(p: Project, filter: string) {
   if (filter === "ert") return p.type.includes("ERT") || p.type.includes("مقاومة");
   if (filter === "topo") return p.type.includes("طبوغراف");
   return true;
+}
+
+function ProjectsLayout() {
+  const childMatches = useChildMatches();
+  if (childMatches.length > 0) return <Outlet />;
+  return <ProjectsListScreen />;
 }
 
 function ProjectsListScreen() {
@@ -306,7 +312,13 @@ function ProjectsListScreen() {
         onUpdate={updateProject}
       />
 
-      <BottomTabBar active="projects" onChange={(tab) => navigate({ to: tab === "home" ? "/home" : "/projects" })} />
+      <BottomTabBar
+        active="projects"
+        onChange={(tab) => {
+          if (tab === "home") navigate({ to: "/home" });
+          else if (tab === "projects") navigate({ to: "/projects" });
+        }}
+      />
     </div>
   );
 }

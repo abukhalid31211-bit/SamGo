@@ -15,9 +15,10 @@ const items: QuickItem[] = [
 
 type Props = {
   onUpgrade: () => void;
+  onAction?: (id: string) => void;
 };
 
-export function QuickAccess({ onUpgrade }: Props) {
+export function QuickAccess({ onUpgrade, onAction }: Props) {
   return (
     <section style={{ animation: "sg-rise 0.4s ease-out" }}>
       <h2 className="text-sm font-bold text-muted-foreground mb-3 px-1">وصول سريع</h2>
@@ -25,7 +26,7 @@ export function QuickAccess({ onUpgrade }: Props) {
         {items.map((item, i) => (
           <button
             key={item.id}
-            onClick={item.id === "pro" ? onUpgrade : undefined}
+            onClick={item.id === "pro" ? onUpgrade : () => onAction?.(item.id)}
             className="flex flex-col items-center gap-2 group active:scale-95 transition-transform"
             style={{ animation: `sg-rise 0.4s ease-out ${i * 0.06}s both` }}
           >

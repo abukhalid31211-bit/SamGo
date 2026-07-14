@@ -13,11 +13,12 @@ type Project = {
 type Props = {
   projects: Project[];
   onProjectLongPress: (id: string) => void;
+  onProjectClick?: (id: string) => void;
   onCreateProject?: () => void;
   onViewAll?: () => void;
 };
 
-export function ProjectsSection({ projects, onProjectLongPress, onCreateProject, onViewAll }: Props) {
+export function ProjectsSection({ projects, onProjectLongPress, onProjectClick, onCreateProject, onViewAll }: Props) {
   const sorted = [...projects].sort((a, b) => Number(b.pinned) - Number(a.pinned));
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [longPressed, setLongPressed] = useState<string | null>(null);
@@ -70,6 +71,13 @@ export function ProjectsSection({ projects, onProjectLongPress, onCreateProject,
             onMouseLeave={cancelPress}
             onTouchStart={() => startPress(project.id)}
             onTouchEnd={cancelPress}
+            onClick={() => {
+              if (longPressed !== project.id) {
+                onProjectClick?.(project.id);
+              } else {
+                setLongPressed(null);
+              }
+            }}
             className={`shrink-0 w-64 rounded-2xl border bg-card p-4 cursor-pointer transition-all hover:border-[oklch(0.82_0.14_85/0.4)] snap-start ${
               longPressed === project.id ? "scale-95" : ""
             } ${project.pinned ? "border-[oklch(0.82_0.14_85/0.3)]" : "border-border"}`}

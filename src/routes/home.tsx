@@ -110,7 +110,13 @@ function HomeScreen() {
         className="relative z-10 h-[calc(100vh-64px)] overflow-y-auto pb-24"
       >
         <div className="mx-auto max-w-2xl px-4 space-y-6 pt-4">
-          <QuickAccess onUpgrade={() => setUpgradeOpen(true)} />
+          <QuickAccess
+            onUpgrade={() => setUpgradeOpen(true)}
+            onAction={(id) => {
+              if (id === "scan" || id === "detect") navigate({ to: "/projects/new" });
+              else if (id === "3d" || id === "report") navigate({ to: "/projects" });
+            }}
+          />
 
           <DetectorCard plan={data.user.plan} />
 
@@ -119,6 +125,7 @@ function HomeScreen() {
           <ProjectsSection
             projects={data.projects}
             onProjectLongPress={(id) => setProjectSheet(id)}
+            onProjectClick={(id) => navigate({ to: "/projects/$projectId", params: { projectId: id } })}
             onCreateProject={() => navigate({ to: "/projects/new" })}
             onViewAll={() => navigate({ to: "/projects" })}
           />
@@ -129,7 +136,7 @@ function HomeScreen() {
 
       <FAB
         visible={fabVisible}
-        onClick={() => navigate({ to: "/home" })}
+        onClick={() => navigate({ to: "/projects/new" })}
       />
 
       <BottomTabBar active={activeTab} onChange={handleTabChange} />

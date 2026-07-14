@@ -35,6 +35,7 @@ function FileViewerScreen() {
   const navigate = useNavigate();
   const { data } = useLocalData();
   const [analysisOpen, setAnalysisOpen] = useState(false);
+  const [showFullData, setShowFullData] = useState(false);
 
   const project = data.projects.find((p) => p.id === projectId);
   const file = project?.files.find((f) => f.id === fileId);
@@ -111,7 +112,7 @@ function FileViewerScreen() {
               <span>Y</span>
               <span>القيمة</span>
             </div>
-            {Array.from({ length: 5 }).map((_, i) => (
+            {Array.from({ length: showFullData ? 20 : 5 }).map((_, i) => (
               <div key={i} className="grid grid-cols-3 gap-2 text-[11px] py-1">
                 <span>{(i * 1.2).toFixed(1)}</span>
                 <span>{(i * 0.8).toFixed(1)}</span>
@@ -119,8 +120,8 @@ function FileViewerScreen() {
               </div>
             ))}
             <div className="flex gap-2 mt-3">
-              <button className="flex-1 rounded-xl border border-border py-2 text-xs">عرض كامل</button>
-              <button className="flex-1 rounded-xl btn-gold py-2 text-xs font-bold">تحليل البيانات</button>
+              <button onClick={() => setShowFullData((v) => !v)} className="flex-1 rounded-xl border border-border py-2 text-xs">{showFullData ? "تقليص" : "عرض كامل"}</button>
+              <button onClick={() => setAnalysisOpen(true)} className="flex-1 rounded-xl btn-gold py-2 text-xs font-bold">تحليل البيانات</button>
             </div>
           </div>
         )}
