@@ -49,6 +49,7 @@ function ProjectDetailScreen() {
     toggleProjectPin,
     deleteProject,
     setProjectStatus,
+    updateProject,
     addFileToProject,
     removeFileFromProject,
     addTeamMember,
@@ -63,7 +64,6 @@ function ProjectDetailScreen() {
   const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
   const [memberEmail, setMemberEmail] = useState("");
   const [addMemberOpen, setAddMemberOpen] = useState(false);
-  const [archiveConfirm, setArchiveConfirm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!project) {
@@ -363,33 +363,14 @@ function ProjectDetailScreen() {
         </div>
       )}
 
-      {archiveConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-6" onClick={() => setArchiveConfirm(false)}>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <div className="relative w-full max-w-sm rounded-3xl border border-border bg-card p-5 text-center" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-sm font-bold">هل تريد أرشفة {project.name}؟</h3>
-            <div className="flex gap-3 mt-5">
-              <button onClick={() => setArchiveConfirm(false)} className="flex-1 rounded-2xl border border-border py-3 text-sm text-muted-foreground">إلغاء</button>
-              <button
-                onClick={() => {
-                  setProjectStatus(project.id, "archived");
-                  setArchiveConfirm(false);
-                }}
-                className="flex-1 rounded-2xl btn-gold py-3 text-sm font-bold"
-              >
-                أرشفة
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       <ProjectOptionsSheet
         projectId={optionsOpen ? project.id : null}
         projects={data.projects}
         onClose={() => setOptionsOpen(false)}
-        onOpen={() => setOptionsOpen(false)}
+        hideOpen
         onTogglePin={toggleProjectPin}
+        onUpdate={updateProject}
+        onArchive={(id) => setProjectStatus(id, "archived")}
         onDelete={(id) => {
           deleteProject(id);
           navigate({ to: "/projects" });

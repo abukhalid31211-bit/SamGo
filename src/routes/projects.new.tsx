@@ -19,13 +19,19 @@ const projectTypes = [
 
 type Member = { email: string; role: "viewer" | "editor" };
 
-function StepDots({ step }: { step: number }) {
+function StepDots({ step, onJump }: { step: number; onJump: (n: number) => void }) {
   return (
     <div className="flex items-center justify-center gap-2 py-4">
       {[1, 2, 3].map((n, i) => (
         <div key={n} className="flex items-center">
-          <div
+          <button
+            type="button"
+            onClick={() => onJump(n)}
+            disabled={n > step}
+            aria-label={`الخطوة ${n}`}
             className={`w-7 h-7 rounded-full grid place-items-center text-[11px] font-bold transition-all ${
+              n > step ? "cursor-not-allowed" : "active:scale-90"
+            } ${
               n < step
                 ? "bg-success text-primary-foreground"
                 : n === step
@@ -35,7 +41,7 @@ function StepDots({ step }: { step: number }) {
             style={n === step ? { animation: "sg-pulse-ring 1.8s ease-out infinite" } : undefined}
           >
             {n < step ? "✓" : n}
-          </div>
+          </button>
           {i < 2 && (
             <div className={`w-8 h-px mx-1 ${n < step ? "bg-success" : "bg-border"}`} />
           )}
@@ -58,6 +64,7 @@ function CreateProjectScreen() {
   const [location, setLocation] = useState("");
   const [nameError, setNameError] = useState("");
   const [typeError, setTypeError] = useState("");
+  const [mapPickerOpen, setMapPickerOpen] = useState(false);
 
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [coordSystem, setCoordSystem] = useState("WGS84");
@@ -144,7 +151,7 @@ function CreateProjectScreen() {
             style={{ width: `${progressPct}%` }}
           />
         </div>
-        <StepDots step={step} />
+        <StepDots step={step} onJump={setStep} />
       </div>
 
       <div className="mx-auto max-w-2xl px-4 pt-4 space-y-5">
@@ -200,6 +207,14 @@ function CreateProjectScreen() {
               onChange={(e) => setLocation(e.target.value)}
               hint="اكتب اسم الموقع أو الإحداثيات"
             />
+            <button
+              type="button"
+              onClick={() => setMapPickerOpen(true)}
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-dashed border-border py-3 text-xs text-gold active:scale-95 transition-transform"
+            >
+              <span>🗺️</span>
+              <span>تحديد على الخريطة</span>
+            </button>
 
             <GoldButton
               onClick={() => {
@@ -407,6 +422,48 @@ function CreateProjectScreen() {
                 className="flex-1 rounded-2xl bg-destructive text-destructive-foreground py-3 text-sm font-bold active:scale-95 transition-transform"
               >
                 إلغاء الإنشاء
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {mapPickerOpen && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={() => setMapPickerOpen(false)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-2xl rounded-t-3xl border-t border-border bg-card p-5 pb-8"
+            style={{ animation: "sg-rise 0.3s ease-out both" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-1 rounded-full bg-border mx-auto mb-4" />
+            <div className="h-48 rounded-2xl bg-bg-2 relative overflow-hidden mb-4">
+              <div
+                className="absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg, var(--border) 1px, transparent 1px), linear-gradient(0deg, var(--border) 1px, transparent 1px)",
+                  backgroundSize: "24px 24px",
+                }}
+              />
+              <span className="absolute inset-0 grid place-items-center text-3xl">📍</span>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mb-4">اسحب الخريطة لتحديد موقع المشروع بدقة</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setMapPickerOpen(false)}
+                className="flex-1 rounded-2xl border border-border py-3 text-sm text-muted-foreground active:scale-95 transition-transform"
+              >
+                إلغاء
+              </button>
+              <button
+                onClick={() => {
+                  setLocation("24.7136° N, 46.6753° E");
+                  setMapPickerOpen(false);
+                }}
+                className="flex-1 rounded-2xl btn-gold py-3 text-sm font-bold active:scale-95 transition-transform"
+              >
+                تأكيد الموقع
               </button>
             </div>
           </div>

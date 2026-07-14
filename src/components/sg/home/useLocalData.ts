@@ -229,6 +229,18 @@ export function useLocalData() {
     return id;
   };
 
+  const updateProject = (
+    id: string,
+    patch: Partial<Pick<Project, "name" | "description" | "location">>,
+  ) =>
+    persist((d) => {
+      const next = {
+        ...d,
+        projects: d.projects.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+      };
+      return addActivity(next, id, { type: "edit", title: "تعديل المشروع", desc: "تم تعديل معلومات المشروع" });
+    });
+
   const setProjectStatus = (id: string, status: ProjectStatus) =>
     persist((d) => {
       const next = {
@@ -308,6 +320,7 @@ export function useLocalData() {
     deleteProject,
     restoreProject,
     addProject,
+    updateProject,
     setProjectStatus,
     addFileToProject,
     removeFileFromProject,

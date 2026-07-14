@@ -53,7 +53,7 @@ function matchesFilter(p: Project, filter: string) {
 
 function ProjectsListScreen() {
   const navigate = useNavigate();
-  const { data, deleteProject, restoreProject, toggleProjectPin } = useLocalData();
+  const { data, deleteProject, restoreProject, toggleProjectPin, setProjectStatus, updateProject } = useLocalData();
   const [search, setSearch] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const [filter, setFilter] = useState<string>("all");
@@ -302,6 +302,8 @@ function ProjectsListScreen() {
         onOpen={(id) => navigate({ to: "/projects/$projectId", params: { projectId: id } })}
         onTogglePin={toggleProjectPin}
         onDelete={handleDelete}
+        onArchive={(id) => setProjectStatus(id, "archived")}
+        onUpdate={updateProject}
       />
 
       <BottomTabBar active="projects" onChange={(tab) => navigate({ to: tab === "home" ? "/home" : "/projects" })} />

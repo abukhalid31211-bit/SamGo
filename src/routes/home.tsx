@@ -37,7 +37,15 @@ function HomeScreen() {
   const [activeTab, setActiveTab] = useState("home");
   const [fabVisible, setFabVisible] = useState(true);
 
-  const { data, toggleProjectPin, deleteProject, markNotifRead, markAllNotifsRead } = useLocalData();
+  const {
+    data,
+    toggleProjectPin,
+    deleteProject,
+    setProjectStatus,
+    updateProject,
+    markNotifRead,
+    markAllNotifsRead,
+  } = useLocalData();
 
   useEffect(() => {
     const seen = localStorage.getItem("samgold_home_seen");
@@ -164,6 +172,8 @@ function HomeScreen() {
         onOpen={(id) => navigate({ to: "/projects/$projectId", params: { projectId: id } })}
         onTogglePin={toggleProjectPin}
         onDelete={deleteProject}
+        onArchive={(id) => setProjectStatus(id, "archived")}
+        onUpdate={updateProject}
       />
     </div>
   );
